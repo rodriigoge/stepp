@@ -407,10 +407,12 @@ Utilizar controles visíveis para:
 Swipe entre meses pode existir como melhoria complementar, mas não deve
 ser o único mecanismo de navegação.
 
-Não permitir navegação para meses futuros.
+Permitir consultar todos os 12 meses de cada ano, do ano de criação do
+hábito até o ano atual. A navegação vai de janeiro do ano de criação até
+dezembro do ano atual, inclusive meses futuros e anteriores à criação.
 
-Não é necessário permitir navegação para meses anteriores ao mês de
-criação do hábito.
+Datas futuras e anteriores à criação permanecem desabilitadas para
+marcação. Conclusões persistidas aparecem no mês correspondente.
 
 ------------------------------------------------------------------------
 

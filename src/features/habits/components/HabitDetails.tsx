@@ -1,6 +1,7 @@
 import { DeleteHabitConfirmation } from './DeleteHabitConfirmation';
 import { HabitFormSheet } from './HabitFormSheet';
 import { HabitCalendar } from './HabitCalendar';
+import { HabitOptionsModal } from './HabitOptionsModal';
 import { useState } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -72,9 +73,11 @@ function DetailsContent({
     <>
       <ScrollView
         contentContainerStyle={styles.content}
-        accessibilityElementsHidden={editing || confirmingDelete}
+        accessibilityElementsHidden={menuOpen || editing || confirmingDelete}
         importantForAccessibility={
-          editing || confirmingDelete ? 'no-hide-descendants' : 'auto'
+          menuOpen || editing || confirmingDelete
+            ? 'no-hide-descendants'
+            : 'auto'
         }
       >
         <View style={styles.toolbar}>
@@ -93,43 +96,28 @@ function DetailsContent({
             )}
           />
         </View>
-        {menuOpen && (
-          <View style={styles.menu}>
-            <Button
-              label="Editar hábito"
-              variant="secondary"
-              onPress={() => {
-                setMenuOpen(false);
-                setEditing(true);
-              }}
-            />
-            <Button
-              label="Excluir hábito"
-              variant="danger"
-              onPress={() => {
-                setMenuOpen(false);
-                setConfirmingDelete(true);
-              }}
-            />
-          </View>
-        )}
         <Text accessibilityRole="header" style={styles.title}>
           {habit.name}
         </Text>
         <View style={styles.metrics}>
-          <StreakIndicator
-            value={metrics.currentStreak}
-            recordId={
-              recordFeedback?.habitId === habit.id
-                ? recordFeedback.id
-                : undefined
-            }
-          />
-          <MetricValue
-            value={metrics.totalCompletions}
-            suffix={metrics.totalCompletions === 1 ? 'conclusão' : 'conclusões'}
-            style={styles.body}
-          />
+          <View style={styles.metricsRow}>
+            <MetricValue
+              value={metrics.totalCompletions}
+              suffix={
+                metrics.totalCompletions === 1 ? 'conclusão' : 'conclusões'
+              }
+              style={styles.body}
+            />
+            <StreakIndicator
+              inline
+              value={metrics.currentStreak}
+              recordId={
+                recordFeedback?.habitId === habit.id
+                  ? recordFeedback.id
+                  : undefined
+              }
+            />
+          </View>
           <Text
             accessibilityLabel={`Melhor sequência: ${metrics.bestStreak} ${metrics.bestStreak === 1 ? 'dia' : 'dias'}`}
             style={styles.body}
@@ -158,6 +146,19 @@ function DetailsContent({
           </Text>
         )}
       </ScrollView>
+      {menuOpen && (
+        <HabitOptionsModal
+          onClose={() => setMenuOpen(false)}
+          onEdit={() => {
+            setMenuOpen(false);
+            setEditing(true);
+          }}
+          onDelete={() => {
+            setMenuOpen(false);
+            setConfirmingDelete(true);
+          }}
+        />
+      )}
       {editing && (
         <HabitFormSheet
           mode="edit"
@@ -185,10 +186,15 @@ const styles = StyleSheet.create({
     gap: spacing.xl,
   },
   toolbar: { flexDirection: 'row', justifyContent: 'space-between' },
-  menu: { gap: spacing.sm },
   title: { ...typography.title, color: colors.textPrimary },
   sectionTitle: { ...typography.habitName, color: colors.textPrimary },
   body: { ...typography.body, color: colors.textSecondary },
   error: { ...typography.caption, color: colors.danger },
-  metrics: { alignItems: 'flex-start', gap: spacing.sm },
+  metrics: { gap: spacing.sm },
+  metricsRow: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'space-between',
+    gap: spacing.sm,
+  },
 });

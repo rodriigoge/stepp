@@ -74,7 +74,11 @@ export function DayStatus({
           useNativeDriver: true,
         }).start()
       }
-      style={[styles.container, disabled && styles.disabled]}
+      style={[
+        styles.container,
+        compact && styles.compact,
+        disabled && styles.disabled,
+      ]}
     >
       {!compact && (
         <Text style={styles.weekday}>
@@ -108,6 +112,7 @@ const styles = StyleSheet.create({
     gap: spacing.xs,
   },
   disabled: { opacity: controls.disabledOpacity },
+  compact: { minWidth: 0 },
   weekday: { ...typography.caption, color: colors.textSecondary },
   day: { ...typography.body, color: colors.textPrimary },
   todayLabel: { fontFamily: fontFamilies.bold },

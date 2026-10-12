@@ -108,6 +108,11 @@ export function startOfMonth(date: LocalDate): LocalDate {
   return formatDate(parsed.getUTCFullYear(), parsed.getUTCMonth() + 1, 1);
 }
 
+/** First calendar day of the year containing date. */
+export function startOfYear(date: LocalDate): LocalDate {
+  return formatDate(parseDate(date).getUTCFullYear(), 1, 1);
+}
+
 /** Moves to the first day of another month; rejects invalid/out-of-range input. */
 export function shiftMonth(date: LocalDate, amount: number): LocalDate {
   if (!Number.isSafeInteger(amount))

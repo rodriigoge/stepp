@@ -657,9 +657,8 @@ disabled
 mês seguinte ›
 ```
 
-Não permitir navegar além do mês atual.
-
-Não permitir navegar para antes do mês de criação quando isso não fornecer informação útil.
+Permitir consultar de janeiro do ano de criação até dezembro do ano atual.
+Datas futuras e anteriores à criação permanecem bloqueadas para marcação.
 
 ## Critério de aceite
 

@@ -9,6 +9,65 @@ const habit = {
   completedDates: ['2026-10-02', '2026-10-03'],
 };
 describe('Habit Calendar', () => {
+  it('visits all twelve months, preserves history and blocks unavailable dates', async () => {
+    const onToggleDay = jest.fn();
+    await render(
+      <HabitCalendar
+        habit={{ ...habit, completedDates: ['2026-09-15', '2026-10-02'] }}
+        today="2026-10-03"
+        onToggleDay={onToggleDay}
+      />,
+    );
+    for (let i = 0; i < 9; i++) {
+      await fireEvent.press(
+        screen.getByRole('button', { name: 'Mês anterior' }),
+      );
+    }
+    expect(
+      screen.getByRole('header', { name: 'janeiro de 2026' }),
+    ).toBeOnTheScreen();
+    expect(screen.getByRole('button', { name: 'Mês anterior' })).toBeDisabled();
+    expect(screen.getAllByRole('checkbox', { disabled: true })).toHaveLength(
+      31,
+    );
+    await fireEvent.press(
+      screen.getByRole('checkbox', { name: /^Ler, 1 de janeiro/ }),
+    );
+    for (let i = 0; i < 8; i++) {
+      await fireEvent.press(
+        screen.getByRole('button', { name: 'Mês seguinte' }),
+      );
+    }
+    expect(
+      screen.getByRole('checkbox', {
+        name: /^Ler, 15 de setembro/,
+        checked: true,
+      }),
+    ).not.toBeDisabled();
+    await fireEvent.press(screen.getByRole('button', { name: 'Mês seguinte' }));
+    expect(
+      screen.getByRole('checkbox', {
+        name: /^Ler, 2 de outubro/,
+        checked: true,
+      }),
+    ).not.toBeDisabled();
+    for (let i = 0; i < 2; i++) {
+      await fireEvent.press(
+        screen.getByRole('button', { name: 'Mês seguinte' }),
+      );
+    }
+    expect(
+      screen.getByRole('header', { name: 'dezembro de 2026' }),
+    ).toBeOnTheScreen();
+    expect(screen.getByRole('button', { name: 'Mês seguinte' })).toBeDisabled();
+    expect(screen.getAllByRole('checkbox', { disabled: true })).toHaveLength(
+      31,
+    );
+    await fireEvent.press(
+      screen.getByRole('checkbox', { name: /^Ler, 1 de dezembro/ }),
+    );
+    expect(onToggleDay).not.toHaveBeenCalled();
+  });
   it('renders completion, today and future states and bounds month navigation', async () => {
     await render(
       <HabitCalendar
@@ -33,7 +92,9 @@ describe('Habit Calendar', () => {
         disabled: true,
       }),
     ).toBeOnTheScreen();
-    expect(screen.getByRole('button', { name: 'Mês seguinte' })).toBeDisabled();
+    expect(
+      screen.getByRole('button', { name: 'Mês seguinte' }),
+    ).not.toBeDisabled();
     await fireEvent.press(screen.getByRole('button', { name: 'Mês anterior' }));
     expect(
       screen.getByRole('header', { name: 'setembro de 2026' }),
@@ -51,7 +112,9 @@ describe('Habit Calendar', () => {
         disabled: false,
       }),
     ).toBeOnTheScreen();
-    expect(screen.getByRole('button', { name: 'Mês anterior' })).toBeDisabled();
+    expect(
+      screen.getByRole('button', { name: 'Mês anterior' }),
+    ).not.toBeDisabled();
     await fireEvent.press(screen.getByRole('button', { name: 'Mês seguinte' }));
     expect(
       screen.getByRole('header', { name: 'outubro de 2026' }),
@@ -69,7 +132,9 @@ describe('Habit Calendar', () => {
     expect(
       screen.getByRole('header', { name: 'dezembro de 2026' }),
     ).toBeOnTheScreen();
-    expect(screen.getByRole('button', { name: 'Mês anterior' })).toBeDisabled();
+    expect(
+      screen.getByRole('button', { name: 'Mês anterior' }),
+    ).not.toBeDisabled();
     expect(screen.getAllByRole('checkbox', { disabled: false })).toHaveLength(
       1,
     );

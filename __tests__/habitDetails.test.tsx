@@ -81,6 +81,12 @@ describe('Habit Details', () => {
     expect(
       screen.getByRole('button', { name: 'Excluir hábito' }),
     ).toBeOnTheScreen();
+    expect(screen.queryByRole('button', { name: 'Voltar' })).toBeNull();
+    expect(screen.queryByRole('header', { name: 'Histórico' })).toBeNull();
+    await fireEvent.press(screen.getByRole('button', { name: 'Cancelar' }));
+    expect(screen.queryByRole('button', { name: 'Excluir hábito' })).toBeNull();
+    expect(screen.getByRole('header', { name: 'Histórico' })).toBeOnTheScreen();
+    expect(await repository.getCompletions(habitId)).toHaveLength(4);
     await fireEvent.press(screen.getByRole('button', { name: 'Voltar' }));
     expect(
       await screen.findByRole('header', { name: 'Meus hábitos' }),

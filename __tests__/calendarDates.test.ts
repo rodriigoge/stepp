@@ -2,9 +2,16 @@ import {
   getMonthWeeks,
   shiftMonth,
   startOfMonth,
+  startOfYear,
 } from '../src/shared/date/dateUtils';
 
 describe('Calendar dates', () => {
+  it('starts the calendar year without shifting local dates', () => {
+    expect(startOfYear('2026-10-12')).toBe('2026-01-01');
+    expect(startOfYear('0000-12-31')).toBe('0000-01-01');
+    expect(startOfYear('9999-12-31')).toBe('9999-01-01');
+    expect(() => startOfYear('2026-02-29')).toThrow(RangeError);
+  });
   it.each([
     ['2026-02-10', 28],
     ['2024-02-10', 29],

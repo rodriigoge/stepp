@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import {
   Animated,
-  ScrollView,
   StyleSheet,
   Text,
   View,
@@ -9,7 +8,6 @@ import {
 } from 'react-native';
 import { IconButton } from '../../../design-system/components/IconButton/IconButton';
 import { colors } from '../../../design-system/tokens/colors';
-import { controls } from '../../../design-system/tokens/controls';
 import { spacing } from '../../../design-system/tokens/spacing';
 import { typography } from '../../../design-system/tokens/typography';
 import {
@@ -18,6 +16,7 @@ import {
   getMonthWeeks,
   shiftMonth,
   startOfMonth,
+  startOfYear,
   toLocalDate,
 } from '../../../shared/date/dateUtils';
 import type { LocalDate } from '../../../shared/date/LocalDate';
@@ -38,8 +37,8 @@ export function HabitCalendar({
 }) {
   const [selectedMonth, setSelectedMonth] = useState(() => startOfMonth(today));
   const createdDate = toLocalDate(new Date(habit.createdAt));
-  const firstMonth = startOfMonth(createdDate);
-  const lastMonth = startOfMonth(today);
+  const firstMonth = startOfYear(createdDate);
+  const lastMonth = shiftMonth(startOfYear(today), 11);
   const month =
     differenceInCalendarDays(selectedMonth, lastMonth) > 0
       ? lastMonth
@@ -94,46 +93,40 @@ export function HabitCalendar({
           )}
         />
       </View>
-      <ScrollView
-        horizontal
-        contentContainerStyle={styles.grid}
-        showsHorizontalScrollIndicator
-      >
-        <Animated.View style={[styles.weeks, { opacity: gridOpacity }]}>
-          <View style={styles.row}>
-            {weekdays.map((day) => (
-              <Text key={day} style={styles.weekday}>
-                {day}
-              </Text>
-            ))}
-          </View>
-          {getMonthWeeks(month).map((week, index) => (
-            <View key={index} style={styles.row}>
-              {week.map((date, column) => {
-                if (!date) return <View key={column} style={styles.empty} />;
-                let disabled = false;
-                try {
-                  validateCompletionDate(date, createdDate, today);
-                } catch {
-                  disabled = true;
-                }
-                return (
-                  <DayStatus
-                    key={date}
-                    date={date}
-                    today={today}
-                    habitName={habit.name}
-                    completed={habit.completedDates.includes(date)}
-                    disabled={disabled}
-                    compact
-                    onPress={onToggleDay ? () => onToggleDay(date) : undefined}
-                  />
-                );
-              })}
-            </View>
+      <Animated.View style={[styles.weeks, { opacity: gridOpacity }]}>
+        <View style={styles.row}>
+          {weekdays.map((day) => (
+            <Text key={day} style={styles.weekday}>
+              {day}
+            </Text>
           ))}
-        </Animated.View>
-      </ScrollView>
+        </View>
+        {getMonthWeeks(month).map((week, index) => (
+          <View key={index} style={styles.row}>
+            {week.map((date, column) => {
+              if (!date) return <View key={column} style={styles.empty} />;
+              let disabled = false;
+              try {
+                validateCompletionDate(date, createdDate, today);
+              } catch {
+                disabled = true;
+              }
+              return (
+                <DayStatus
+                  key={date}
+                  date={date}
+                  today={today}
+                  habitName={habit.name}
+                  completed={habit.completedDates.includes(date)}
+                  disabled={disabled}
+                  compact
+                  onPress={onToggleDay ? () => onToggleDay(date) : undefined}
+                />
+              );
+            })}
+          </View>
+        ))}
+      </Animated.View>
     </View>
   );
 }
@@ -150,15 +143,14 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: colors.textPrimary,
   },
-  grid: { flexGrow: 1 },
-  weeks: { flex: 1, minWidth: controls.minTouchTarget * 7 },
+  weeks: { alignSelf: 'stretch' },
   row: { flexDirection: 'row' },
   weekday: {
     ...typography.caption,
     color: colors.textSecondary,
     textAlign: 'center',
     flex: 1,
-    minWidth: controls.minTouchTarget,
+    minWidth: 0,
   },
-  empty: { flex: 1, minWidth: controls.minTouchTarget },
+  empty: { flex: 1, minWidth: 0 },
 });
