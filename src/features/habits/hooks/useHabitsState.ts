@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { AppState, LayoutAnimation, Platform, UIManager } from 'react-native';
+import { AppState, LayoutAnimation } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import { useSQLiteContext } from 'expo-sqlite';
 import { getToday, toLocalDate } from '../../../shared/date/dateUtils';
@@ -20,9 +20,6 @@ type PendingDay = {
 };
 
 function animateHabitListChange() {
-  if (Platform.OS === 'android') {
-    UIManager.setLayoutAnimationEnabledExperimental?.(true);
-  }
   LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
 }
 
