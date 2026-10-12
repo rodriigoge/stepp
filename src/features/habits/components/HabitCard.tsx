@@ -1,4 +1,4 @@
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { colors } from '../../../design-system/tokens/colors';
 import { radius } from '../../../design-system/tokens/radius';
 import { spacing } from '../../../design-system/tokens/spacing';
@@ -54,7 +54,7 @@ export function HabitCard({
           />
         </View>
       </Pressable>
-      <ScrollView horizontal contentContainerStyle={styles.days}>
+      <View style={styles.days}>
         {days.map(({ date, completed, disabled }) => (
           <DayStatus
             key={date}
@@ -66,7 +66,7 @@ export function HabitCard({
             onPress={onToggleDay ? () => onToggleDay(date) : undefined}
           />
         ))}
-      </ScrollView>
+      </View>
       {error && (
         <Text
           accessibilityRole="alert"
@@ -103,6 +103,6 @@ const styles = StyleSheet.create({
     color: colors.textPrimary,
   },
   total: { ...typography.body, color: colors.textSecondary },
-  days: { flexDirection: 'row', flexGrow: 1 },
+  days: { flexDirection: 'row', alignItems: 'flex-start' },
   error: { ...typography.caption, color: colors.danger },
 });

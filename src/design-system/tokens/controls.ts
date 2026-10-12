@@ -2,6 +2,7 @@
 export const controls = {
   minTouchTarget: 52,
   iconSize: 24,
+  toolbarIconSize: 32,
   floatingIconSize: 18,
   floatingIconStrokeWidth: 3,
   pressedOpacity: 0.72,

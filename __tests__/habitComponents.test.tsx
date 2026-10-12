@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react-native';
+import { render, screen, within } from '@testing-library/react-native';
 import { DayStatus } from '../src/features/habits/components/DayStatus';
 import { HabitCard } from '../src/features/habits/components/HabitCard';
 import { StreakIndicator } from '../src/features/habits/components/StreakIndicator';
@@ -46,6 +46,33 @@ describe('DayStatus', () => {
 });
 
 describe('HabitCard', () => {
+  it.each([
+    ['2026-10-12', ['07', '08', '09', '10', '11', '12']],
+    ['2026-10-03', ['28', '29', '30', '01', '02', '03']],
+    ['2027-01-02', ['28', '29', '30', '31', '01', '02']],
+  ])(
+    'displays all six complete day numbers ending on %s',
+    async (today, labels) => {
+      await render(
+        <HabitCard
+          today={today as string}
+          habit={{
+            id: 'reading',
+            name: 'Leitura',
+            createdAt: '2026-09-01T12:00:00Z',
+            updatedAt: '2026-09-01T12:00:00Z',
+            completedDates: [],
+          }}
+        />,
+      );
+      const days = screen.getAllByRole('checkbox');
+      expect(days).toHaveLength(6);
+      days.forEach((day, index) => {
+        expect(within(day).getByText(labels[index])).toBeOnTheScreen();
+      });
+      expect(days[5].props.accessibilityLabel).toContain('hoje');
+    },
+  );
   it('renders the name, current streak, total and exactly six days', async () => {
     await render(
       <HabitCard

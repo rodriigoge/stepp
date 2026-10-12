@@ -74,11 +74,7 @@ export function DayStatus({
           useNativeDriver: true,
         }).start()
       }
-      style={[
-        styles.container,
-        compact && styles.compact,
-        disabled && styles.disabled,
-      ]}
+      style={[styles.container, disabled && styles.disabled]}
     >
       {!compact && (
         <Text style={styles.weekday}>
@@ -105,16 +101,20 @@ export function DayStatus({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    minWidth: controls.minTouchTarget,
+    minWidth: 0,
     minHeight: controls.minTouchTarget,
     alignItems: 'center',
     paddingVertical: spacing.sm,
     gap: spacing.xs,
   },
   disabled: { opacity: controls.disabledOpacity },
-  compact: { minWidth: 0 },
   weekday: { ...typography.caption, color: colors.textSecondary },
-  day: { ...typography.body, color: colors.textPrimary },
+  day: {
+    ...typography.body,
+    color: colors.textPrimary,
+    alignSelf: 'stretch',
+    textAlign: 'center',
+  },
   todayLabel: { fontFamily: fontFamilies.bold },
   mark: {
     width: controls.iconSize,

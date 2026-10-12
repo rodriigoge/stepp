@@ -9,6 +9,7 @@ import { Button } from '../../../design-system/components/Button/Button';
 import { IconButton } from '../../../design-system/components/IconButton/IconButton';
 import { Divider } from '../../../design-system/components/Divider/Divider';
 import { colors } from '../../../design-system/tokens/colors';
+import { controls } from '../../../design-system/tokens/controls';
 import { spacing } from '../../../design-system/tokens/spacing';
 import { typography } from '../../../design-system/tokens/typography';
 import { useHabits } from '../hooks/useHabits';
@@ -83,6 +84,8 @@ function DetailsContent({
         <View style={styles.toolbar}>
           <IconButton
             accessibilityLabel="Voltar"
+            iconAlignment="start"
+            iconSize={controls.toolbarIconSize}
             onPress={onBack}
             renderIcon={({ color, size }) => (
               <Text style={{ color, fontSize: size }}>‹</Text>
@@ -90,6 +93,8 @@ function DetailsContent({
           />
           <IconButton
             accessibilityLabel="Opções do hábito"
+            iconAlignment="end"
+            iconSize={controls.toolbarIconSize}
             onPress={() => setMenuOpen(!menuOpen)}
             renderIcon={({ color, size }) => (
               <Text style={{ color, fontSize: size }}>⋯</Text>
