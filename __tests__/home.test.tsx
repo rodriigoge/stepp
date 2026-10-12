@@ -225,7 +225,7 @@ describe('Home with persisted data', () => {
       screen.queryByRole('button', { name: 'Criar primeiro hábito' }),
     ).toBeNull();
     expect(screen.getAllByRole('checkbox')).toHaveLength(6);
-    expect(screen.getAllByRole('checkbox', { disabled: true })).toHaveLength(5);
+    expect(screen.getAllByRole('checkbox', { disabled: false })).toHaveLength(6);
     expect((await repository.findAll())[0].name).toBe('Alongamento');
   });
 });

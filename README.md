@@ -112,7 +112,7 @@ de 80 caracteres. Erros de criação ficam no formulário, sem perder o texto.
 Datas válidas usam atualização otimista. Gravações da mesma data são serializadas,
 preservando a intenção final de toques rápidos. Falhas restauram apenas a data
 afetada ao último estado confirmado, sem desfazer edições de outras datas.
-Datas anteriores à criação são indisponíveis. Haptics leves usam expo-haptics
+Datas anteriores à criação são editáveis. Haptics leves usam expo-haptics
 ~57.0.3 somente ao concluir; falhas táteis não interrompem a persistência.
 
 Validação automatizada: suíte completa, typecheck, lint, formatter, compatibilidade
@@ -127,8 +127,8 @@ existente do lockfile foi alterada. Não foi aplicado audit fix.
 
 A rota /habit/[id] apresenta métricas derivadas e calendário mensal.
 HabitsProvider compartilha o mesmo estado e toggle otimista entre Home e Details.
-O calendário usa LocalDate e limita navegação ao mês de criação até o atual.
-Dias futuros e anteriores à criação são indisponíveis; todos os outros permitem
+O calendário usa LocalDate e permite navegar por anos anteriores e até dezembro do ano atual.
+Somente dias futuros são indisponíveis; todos os outros permitem
 edição histórica com rollback. Operações de mês ficam na Date Foundation.
 
 Editar reutiliza HabitFormSheet e altera apenas o nome. Excluir exige confirmação

@@ -170,7 +170,7 @@ describe('Habit Details', () => {
     expect(await repository.getCompletions(habitId)).toHaveLength(4);
   });
 
-  it('does not persist future or pre-creation calendar dates', async () => {
+  it('blocks future dates but persists calendar dates before creation', async () => {
     const toggle = jest.spyOn(
       SQLiteHabitRepository.prototype,
       'toggleCompletion',
@@ -180,11 +180,16 @@ describe('Habit Details', () => {
     await fireEvent.press(
       screen.getByRole('checkbox', { name: /^Leitura, 4 de outubro/ }),
     );
+    expect(toggle).not.toHaveBeenCalled();
     await fireEvent.press(screen.getByRole('button', { name: 'Mês anterior' }));
     await fireEvent.press(
       screen.getByRole('checkbox', { name: /^Leitura, 9 de setembro/ }),
     );
-    expect(toggle).not.toHaveBeenCalled();
+    expect(toggle).toHaveBeenCalledWith(habitId, '2026-09-09');
+    expect(
+      screen.getByRole('checkbox', { name: /^Leitura, 9 de setembro/ }),
+    ).toBeChecked();
+    expect(await repository.getCompletions(habitId)).toHaveLength(5);
   });
 
   it('edits only the name and synchronizes Home without changing identity or history', async () => {

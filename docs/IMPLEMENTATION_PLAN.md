@@ -657,8 +657,8 @@ disabled
 mês seguinte ›
 ```
 
-Permitir consultar de janeiro do ano de criação até dezembro do ano atual.
-Datas futuras e anteriores à criação permanecem bloqueadas para marcação.
+Permitir consultar anos anteriores à criação e todos os meses até dezembro do ano atual.
+Somente datas futuras permanecem bloqueadas para marcação.
 
 ## Critério de aceite
 
@@ -689,7 +689,6 @@ Atualizar imediatamente:
 
 ```text
 data futura
-data anterior à criação
 ```
 
 ## Critério de aceite

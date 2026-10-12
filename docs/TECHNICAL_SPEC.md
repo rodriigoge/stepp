@@ -362,7 +362,7 @@ SENÃO
 Antes da criação de uma conclusão:
 
 ```text
-habit.createdDate <= completion.date <= today
+completion.date <= today
 ```
 
 Portanto:
@@ -372,7 +372,7 @@ data futura
 → rejeitar
 
 data anterior à criação
-→ rejeitar
+→ permitir
 
 data válida
 → permitir
@@ -1179,7 +1179,7 @@ Priorizar:
 - navegação;
 - estados dos dias;
 - bloqueio futuro;
-- bloqueio pré-criação.
+- edição de conclusões anteriores à criação.
 
 ---
 

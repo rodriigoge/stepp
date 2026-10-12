@@ -26,13 +26,17 @@ describe('Habit Calendar', () => {
     expect(
       screen.getByRole('header', { name: 'janeiro de 2026' }),
     ).toBeOnTheScreen();
-    expect(screen.getByRole('button', { name: 'Mês anterior' })).toBeDisabled();
-    expect(screen.getAllByRole('checkbox', { disabled: true })).toHaveLength(
+    expect(
+      screen.getByRole('button', { name: 'Mês anterior' }),
+    ).not.toBeDisabled();
+    expect(screen.getAllByRole('checkbox', { disabled: false })).toHaveLength(
       31,
     );
     await fireEvent.press(
       screen.getByRole('checkbox', { name: /^Ler, 1 de janeiro/ }),
     );
+    expect(onToggleDay).toHaveBeenCalledWith('2026-01-01');
+    onToggleDay.mockClear();
     for (let i = 0; i < 8; i++) {
       await fireEvent.press(
         screen.getByRole('button', { name: 'Mês seguinte' }),
@@ -103,7 +107,7 @@ describe('Habit Calendar', () => {
     expect(
       screen.getByRole('checkbox', {
         name: /^Ler, 9 de setembro/,
-        disabled: true,
+        disabled: false,
       }),
     ).toBeOnTheScreen();
     expect(
@@ -136,7 +140,7 @@ describe('Habit Calendar', () => {
       screen.getByRole('button', { name: 'Mês anterior' }),
     ).not.toBeDisabled();
     expect(screen.getAllByRole('checkbox', { disabled: false })).toHaveLength(
-      1,
+      31,
     );
   });
 });

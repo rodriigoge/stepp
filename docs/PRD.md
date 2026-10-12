@@ -574,7 +574,7 @@ Portanto:
 
 # 20. Data de Criação do Hábito
 
-O histórico de um hábito começa na data de sua criação.
+O usuário pode registrar conclusões anteriores à criação do hábito no aplicativo.
 
 Datas anteriores à criação não representam falhas.
 
@@ -584,9 +584,8 @@ Hábito criado em:
 
 **01/10/2026**
 
-Datas de setembro não devem ser consideradas dias não realizados daquele hábito.
-
-Elas simplesmente estão fora de seu período de existência.
+Datas de setembro podem ser marcadas para recuperar atividades já realizadas.
+Datas sem registros anteriores à criação não representam falhas.
 
 ---
 

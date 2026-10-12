@@ -157,7 +157,7 @@ it('rolls back failed inserts and leaves the connection usable', async () => {
   );
 });
 
-it('validates local creation day and today, rejecting dates outside the interval', async () => {
+it('accepts pre-creation dates and rejects future or invalid dates', async () => {
   jest.setSystemTime(new Date(2026, 9, 2, 23, 30));
   const creation = getToday();
   const habit = await repository.create({ name: 'Read' });
@@ -170,14 +170,14 @@ it('validates local creation day and today, rejecting dates outside the interval
   );
   await expect(
     repository.toggleCompletion(habit.id, addDays(creation, -1)),
-  ).rejects.toThrow(RangeError);
+  ).resolves.toBe(true);
   await expect(
     repository.toggleCompletion(habit.id, addDays(getToday(), 1)),
   ).rejects.toThrow(RangeError);
   await expect(
     repository.toggleCompletion(habit.id, '2026-02-29'),
   ).rejects.toThrow(RangeError);
-  expect(await repository.getCompletions(habit.id)).toHaveLength(2);
+  expect(await repository.getCompletions(habit.id)).toHaveLength(3);
 });
 
 it('orders history and queries inclusive intervals', async () => {

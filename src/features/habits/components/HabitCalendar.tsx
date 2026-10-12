@@ -37,7 +37,7 @@ export function HabitCalendar({
 }) {
   const [selectedMonth, setSelectedMonth] = useState(() => startOfMonth(today));
   const createdDate = toLocalDate(new Date(habit.createdAt));
-  const firstMonth = startOfYear(createdDate);
+  const firstMonth: LocalDate = '0000-01-01';
   const lastMonth = shiftMonth(startOfYear(today), 11);
   const month =
     differenceInCalendarDays(selectedMonth, lastMonth) > 0

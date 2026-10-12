@@ -186,7 +186,7 @@ describe('Home completion interaction', () => {
     expect(screen.getByRole('alert')).toBeOnTheScreen();
   });
 
-  it('blocks pre-creation days while leaving today editable for a new habit', async () => {
+  it('persists previous days for a habit created today', async () => {
     await repository.delete(habitId);
     habitId = (await repository.create({ name: 'Corrida' })).id;
     const toggle = jest.spyOn(
@@ -195,10 +195,14 @@ describe('Home completion interaction', () => {
     );
     await render(<Home />);
     await screen.findByText('Corrida');
-    expect(screen.getAllByRole('checkbox', { disabled: true })).toHaveLength(5);
+    expect(screen.getAllByRole('checkbox', { disabled: false })).toHaveLength(
+      6,
+    );
     expect(day(3)).not.toBeDisabled();
     await fireEvent.press(day(2));
-    expect(toggle).not.toHaveBeenCalled();
+    expect(toggle).toHaveBeenCalledWith(habitId, '2026-10-02');
+    expect(day(2)).toBeChecked();
+    expect(await repository.getCompletions(habitId)).toHaveLength(1);
   });
 
   it('briefly announces a newly reached best streak', async () => {

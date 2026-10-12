@@ -407,12 +407,12 @@ Utilizar controles visíveis para:
 Swipe entre meses pode existir como melhoria complementar, mas não deve
 ser o único mecanismo de navegação.
 
-Permitir consultar todos os 12 meses de cada ano, do ano de criação do
-hábito até o ano atual. A navegação vai de janeiro do ano de criação até
-dezembro do ano atual, inclusive meses futuros e anteriores à criação.
+Permitir consultar todos os 12 meses do ano atual e navegar por anos anteriores,
+inclusive antes da criação do hábito no aplicativo. O limite futuro da
+navegação é dezembro do ano atual.
 
-Datas futuras e anteriores à criação permanecem desabilitadas para
-marcação. Conclusões persistidas aparecem no mês correspondente.
+Somente datas futuras permanecem desabilitadas para marcação.
+Conclusões persistidas aparecem no mês correspondente.
 
 ------------------------------------------------------------------------
 
@@ -431,11 +431,9 @@ Devem:
 
 Datas anteriores à criação do hábito não representam falhas.
 
-Elas são indisponíveis.
-
-Devem ser visualmente distinguíveis dos dias válidos não concluídos.
-
-Não permitir interação.
+Elas são editáveis na Home (últimos seis dias) e no calendário para recuperar
+conclusões realizadas antes do cadastro. Aplicam-se os mesmos estados visuais
+e a mesma atualização imediata de métricas das demais datas válidas.
 
 ------------------------------------------------------------------------
 

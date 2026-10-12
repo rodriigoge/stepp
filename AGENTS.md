@@ -219,7 +219,6 @@ Recalculate accordingly.
 Never allow completion for:
 
 - future dates;
-- dates before the habit creation date.
 
 The UI must prevent these interactions.
 
@@ -255,7 +254,7 @@ Calendar states include:
 
 Future dates are disabled.
 
-Dates before habit creation are disabled.
+Dates before habit creation are editable to recover past completions.
 
 Do not use future months as meaningful navigation.
 
