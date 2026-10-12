@@ -1,16 +1,18 @@
 {
-	"expo": {
-		"name": "Stepp",
-		"slug": "stepp",
-		"version": "0.1.0",
-		"scheme": "stepp",
-		"platforms": [
-			"android",
-			"ios"
-		],
-		"plugins": [
-			"expo-router",
-			"expo-sqlite"
-		]
-	}
+  "expo": {
+    "name": "Stepp",
+    "slug": "stepp",
+    "version": "0.1.0",
+    "scheme": "stepp",
+    "platforms": [
+      "android",
+      "ios"
+    ],
+    "plugins": [
+      "expo-router",
+      "expo-sqlite",
+      "expo-font",
+      "expo-splash-screen"
+    ]
+  }
 }

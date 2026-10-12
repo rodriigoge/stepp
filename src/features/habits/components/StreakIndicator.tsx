@@ -7,14 +7,19 @@ import {
   useAnimatedValue,
 } from 'react-native';
 import { colors } from '../../../design-system/tokens/colors';
-import { typography } from '../../../design-system/tokens/typography';
+import {
+  fontFamilies,
+  typography,
+} from '../../../design-system/tokens/typography';
 
 export function StreakIndicator({
   value,
   recordId,
+  inline = false,
 }: {
   value: number;
   recordId?: number;
+  inline?: boolean;
 }) {
   const label = value === 1 ? 'dia seguido' : 'dias seguidos';
   const opacity = useAnimatedValue(1);
@@ -42,10 +47,18 @@ export function StreakIndicator({
         accessibilityLabel={value + ' ' + label}
         style={styles.metric}
       >
-        <Animated.Text style={[styles.value, { opacity }]}>
-          {value}
-        </Animated.Text>
-        <Text style={styles.label}>{label}</Text>
+        {inline ? (
+          <Animated.Text style={[styles.inline, { opacity }]}>
+            {value} {label}
+          </Animated.Text>
+        ) : (
+          <>
+            <Animated.Text style={[styles.value, { opacity }]}>
+              {value}
+            </Animated.Text>
+            <Text style={styles.label}>{label}</Text>
+          </>
+        )}
       </View>
       {showRecord && (
         <Text accessibilityLiveRegion="polite" style={styles.record}>
@@ -59,6 +72,11 @@ export function StreakIndicator({
 const styles = StyleSheet.create({
   container: { alignItems: 'flex-end' },
   metric: { alignItems: 'flex-end' },
+  inline: {
+    ...typography.body,
+    color: colors.textSecondary,
+    textAlign: 'right',
+  },
   value: {
     ...typography.metric,
     lineHeight: typography.metric.fontSize,
@@ -72,7 +90,7 @@ const styles = StyleSheet.create({
   },
   record: {
     ...typography.caption,
-    fontWeight: '700',
+    fontFamily: fontFamilies.bold,
     color: colors.accent,
   },
 });

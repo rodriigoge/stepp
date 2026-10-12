@@ -1,6 +1,7 @@
 # Design System Foundation (Milestone 4)
 
-Fundação clara e editorial, sem provider de tema, fonte externa ou biblioteca de UI.
+Fundação clara e editorial, sem provider de tema ou biblioteca de UI.
+Inter é incluída no bundle e carregada antes das telas, sem acesso à rede.
 Importe cada componente e token pelo seu arquivo. Não há showcase/rota no aplicativo.
 
 ## Tokens
@@ -9,8 +10,9 @@ Importe cada componente e token pelo seu arquivo. Não há showcase/rota no apli
   accent, completed, inactive, danger e onAction. Accent usa verde escuro;
   completed usa verde pastel para os indicadores de conclusão.
 - `typography`: display 40, title 28, habitName 20, metric 36, body 16, label 13,
-  caption 12. Títulos/números usam Georgia no iOS e serif no Android; o restante usa
-  fonte padrão do sistema. Font scaling permanece habilitado e textos podem quebrar linha.
+  caption 12. Todos usam Inter: regular para texto e métricas, semibold para
+  títulos e ações, bold para nomes de hábitos. Font scaling permanece habilitado
+  e textos podem quebrar linha.
 - `spacing`: 4, 8, 12, 16, 24, 32, 48.
 - `radius`: control 12, round 24.
 - `controls`: área mínima de toque 48, ícone 24 e opacidades de pressed/disabled.

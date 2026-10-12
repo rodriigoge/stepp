@@ -3,7 +3,7 @@ import { colors } from '../../tokens/colors';
 import { controls } from '../../tokens/controls';
 import { radius } from '../../tokens/radius';
 import { spacing } from '../../tokens/spacing';
-import { typography } from '../../tokens/typography';
+import { fontFamilies, typography } from '../../tokens/typography';
 
 export type ButtonProps = Pick<
   PressableProps,
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
   secondary: { backgroundColor: colors.surface },
   label: {
     ...typography.body,
-    fontWeight: '600',
+    fontFamily: fontFamilies.semibold,
     color: colors.onAction,
     textAlign: 'center',
   },

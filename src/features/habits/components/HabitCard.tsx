@@ -40,15 +40,19 @@ export function HabitCard({
           <Text accessibilityRole="header" style={styles.name}>
             {habit.name}
           </Text>
+        </Pressable>
+        <View style={styles.metrics}>
           <MetricValue
             value={metrics.totalCompletions}
             suffix={metrics.totalCompletions === 1 ? 'conclusão' : 'conclusões'}
             style={styles.total}
           />
-        </Pressable>
-        <Pressable accessible={false} onPress={onPress}>
-          <StreakIndicator value={metrics.currentStreak} recordId={recordId} />
-        </Pressable>
+          <StreakIndicator
+            inline
+            value={metrics.currentStreak}
+            recordId={recordId}
+          />
+        </View>
       </Pressable>
       <ScrollView horizontal contentContainerStyle={styles.days}>
         {days.map(({ date, completed, disabled }) => (
@@ -84,13 +88,20 @@ const styles = StyleSheet.create({
     gap: spacing.md,
   },
   heading: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    alignItems: 'center',
-    gap: spacing.lg,
+    gap: spacing.sm,
   },
-  description: { flexGrow: 1, flexShrink: 1, gap: spacing.sm },
-  name: { ...typography.habitName, color: colors.textPrimary },
+  description: { alignSelf: 'stretch' },
+  metrics: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'space-between',
+    gap: spacing.sm,
+  },
+  name: {
+    ...typography.habitName,
+    fontWeight: '700',
+    color: colors.textPrimary,
+  },
   total: { ...typography.body, color: colors.textSecondary },
   days: { flexDirection: 'row', flexGrow: 1 },
   error: { ...typography.caption, color: colors.danger },

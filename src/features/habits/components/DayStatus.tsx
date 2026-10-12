@@ -11,7 +11,10 @@ import { colors } from '../../../design-system/tokens/colors';
 import { controls } from '../../../design-system/tokens/controls';
 import { radius } from '../../../design-system/tokens/radius';
 import { spacing } from '../../../design-system/tokens/spacing';
-import { typography } from '../../../design-system/tokens/typography';
+import {
+  fontFamilies,
+  typography,
+} from '../../../design-system/tokens/typography';
 import { formatLocalDate } from '../../../shared/date/dateUtils';
 import type { LocalDate } from '../../../shared/date/LocalDate';
 
@@ -107,7 +110,7 @@ const styles = StyleSheet.create({
   disabled: { opacity: controls.disabledOpacity },
   weekday: { ...typography.caption, color: colors.textSecondary },
   day: { ...typography.body, color: colors.textPrimary },
-  todayLabel: { fontWeight: '700' },
+  todayLabel: { fontFamily: fontFamilies.bold },
   mark: {
     width: controls.iconSize,
     height: controls.iconSize,
