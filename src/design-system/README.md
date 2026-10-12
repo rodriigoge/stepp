@@ -1,4 +1,4 @@
-# Design System Foundation (Milestone 4)
+# Design System
 
 Fundação clara e editorial, sem provider de tema ou biblioteca de UI.
 Inter é incluída no bundle e carregada antes das telas, sem acesso à rede.
@@ -7,24 +7,26 @@ Importe cada componente e token pelo seu arquivo. Não há showcase/rota no apli
 ## Tokens
 
 - `colors`: background, surface, textPrimary, textSecondary, textMuted, border,
-  accent, completed, inactive, danger e onAction. Accent usa verde escuro;
-  completed usa verde pastel para os indicadores de conclusão.
+  habitCard, accent, completed, inactive, danger, onAction e floatingAction.
+  As cores são definidas por função visual nos componentes.
 - `typography`: display 40, title 28, habitName 20, metric 36, body 16, label 13,
   caption 12. Todos usam Inter: regular para texto e métricas, semibold para
   títulos e ações, bold para nomes de hábitos. Font scaling permanece habilitado
   e textos podem quebrar linha.
 - `spacing`: 4, 8, 12, 16, 24, 32, 48.
 - `radius`: control 12, round 24.
-- `controls`: área mínima de toque 48, ícone 24 e opacidades de pressed/disabled.
+- `controls`: área de toque 52, ícone padrão 24, ícone de toolbar 32,
+  ícone flutuante 18 e opacidades de pressed/disabled.
 
 Sem dark mode, sombras, gradientes ou tokens de animação sem uso.
 
 ## APIs
 
-- `Button`: `label`, `onPress`, `disabled?`, `variant?` (`primary` ou `secondary`),
+- `Button`: `label`, `onPress`, `disabled?`, `variant?` (`primary`, `secondary` ou `danger`),
   `accessibilityHint?`, `testID?`. Label também é seu nome acessível.
 - `IconButton`: `accessibilityLabel` e `renderIcon({ color, size })` obrigatórios;
-  `onPress`, `disabled?`, `accessibilityHint?`, `testID?`. O renderer permite usar um
+  `onPress`, `disabled?`, `accessibilityHint?`, `testID?`, `variant?` (`default` ou `floating`),
+  `iconSize?` e `iconAlignment?` (`center`, `start` ou `end`). O renderer permite usar um
   ícone já disponível no chamador sem acoplar esta base a uma biblioteca. O desenho
   interno fica fora da árvore acessível; o botão expõe a ação nomeada.
 - `TextField`: `value`, `onChangeText`, `label` (ou `accessibilityLabel` obrigatório

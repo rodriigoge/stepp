@@ -1,7 +1,7 @@
 # PRD — Habit Tracker Mobile
 
 **Versão:** 0.1  
-**Status:** MVP — Definição inicial  
+**Escopo:** Aplicativo de hábitos
 **Plataforma:** Mobile  
 **Tipo de produto:** Habit Tracker  
 **Prioridade:** Simplicidade, UX e qualidade visual
@@ -1145,49 +1145,3 @@ Antes de adicionar novos recursos, deverão ser aperfeiçoados:
 - sensação de progresso.
 
 O diferencial competitivo pretendido está principalmente na qualidade dessas experiências.
-
----
-
-# 38. Próximas Etapas
-
-Com o PRD aprovado, o desenvolvimento do produto deverá seguir aproximadamente esta sequência:
-
-**Etapa 1 — UX**
-
-Definir arquitetura de informação e fluxos definitivos.
-
-**Etapa 2 — UI**
-
-Definir linguagem visual, Home, HabitCard, calendário, detalhes, criação e estados especiais.
-
-**Etapa 3 — Design System**
-
-Definir tipografia, espaçamentos, cores, componentes, estados e interações.
-
-**Etapa 4 — Especificação Técnica**
-
-Definir stack, arquitetura, persistência, entidades, regras de cálculo e organização do projeto.
-
-**Etapa 5 — Modelo de Dados**
-
-Definir Habit, HabitCompletion e demais estruturas necessárias.
-
-**Etapa 6 — Casos de Uso**
-
-Transformar requisitos em comportamentos implementáveis.
-
-**Etapa 7 — Testes e Edge Cases**
-
-Especificar cenários de streak, alteração retroativa, mudança de mês, timezone, exclusão e persistência.
-
-**Etapa 8 — Backlog**
-
-Converter o PRD em épicos, histórias e tarefas pequenas.
-
-**Etapa 9 — Especificação para Codex**
-
-Criar documentação técnica objetiva contendo arquitetura, estrutura de projeto, padrões, regras, componentes e critérios de aceite.
-
-**Etapa 10 — Implementação**
-
-Utilizar as especificações anteriores como fonte de verdade durante a construção do MVP.

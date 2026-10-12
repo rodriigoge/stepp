@@ -1,139 +1,116 @@
-# Habit Tracker Mobile
+# Stepp
 
-Milestones 0–14: Home editorial com hábitos persistidos, criação por nome,
-edição dos seis dias recentes e estado vazio. Expo SDK 57, TypeScript e SQLite.
+Um app de hábitos para acompanhar sua consistência, um dia de cada vez.
 
-## Desenvolvimento
+O Stepp combina uma interface minimalista com um histórico fácil de editar. Crie um hábito apenas com o nome, registre suas conclusões e acompanhe a sequência atual, o total acumulado e seu recorde. Os dados ficam no dispositivo e o app funciona offline.
 
-Requisitos: Node.js 24 LTS (24.15 ou superior), npm e Expo Go compatível com SDK 57
-em um dispositivo físico ou emulador Android. O simulador iOS exige macOS e Xcode.
+## Demonstração
+
+[Assista ao vídeo do Stepp](docs/media/stepp-video-app.mp4)
+
+## Funcionalidades
+
+- **Registro em um toque:** marque ou desmarque uma conclusão diretamente na Home.
+- **Últimos seis dias:** visualize os cinco dias anteriores e o dia atual em cada hábito.
+- **Histórico completo:** navegue pelo calendário e corrija registros de dias passados, inclusive anteriores ao cadastro do hábito.
+- **Progresso sempre visível:** acompanhe dias seguidos, total de conclusões e melhor sequência.
+- **Gerenciamento simples:** edite o nome ou exclua um hábito com confirmação.
+- **Feedback imediato:** as marcações e métricas são atualizadas na hora, com animações discretas e feedback tátil quando disponível.
+
+A interface usa a fonte Inter, cards brancos e uma paleta discreta, com foco em legibilidade e clareza.
+
+## Como funciona
+
+1. Toque no botão **+** e informe o nome do hábito.
+2. Toque no indicador de um dia para marcar ou desmarcar sua conclusão.
+3. Abra o card para consultar as métricas e editar o histórico no calendário.
+4. Use o menu dos três pontos para editar ou excluir o hábito.
+
+Cada hábito aceita uma conclusão por dia. Datas futuras não podem ser marcadas. A sequência atual permanece ativa enquanto o dia de hoje ainda está em andamento, desde que ontem tenha sido concluído. Qualquer alteração no histórico recalcula o total, a sequência atual e o recorde.
+
+## Dados locais
+
+Hábitos e conclusões são armazenados em SQLite no dispositivo. Não é necessário criar uma conta nem ter conexão com a internet para usar o app. A fonte também é incluída no aplicativo.
+
+Os dados não são sincronizados entre dispositivos. Excluir um hábito remove seu histórico de conclusões.
+
+## Tecnologias
+
+| Área         | Tecnologia                          |
+| ------------ | ----------------------------------- |
+| Aplicativo   | React Native e Expo SDK 57          |
+| Linguagem    | TypeScript                          |
+| Navegação    | Expo Router                         |
+| Persistência | SQLite com expo-sqlite              |
+| Tipografia   | Inter com expo-font                 |
+| Testes       | Jest e React Native Testing Library |
+
+## Executar localmente
+
+### Requisitos
+
+- Node.js 24.15 ou superior na linha 24 e npm.
+- Expo Go compatível com o SDK 57 em um dispositivo físico, ou um emulador Android configurado.
+- Para o simulador iOS: macOS e Xcode.
+
+### Instalação
+
+Na pasta do projeto, instale as dependências e inicie o servidor de desenvolvimento:
 
 ```sh
 npm ci
 npm start
 ```
 
-Leia o QR code com Expo Go, usando a mesma rede do computador. Para abrir um
-emulador Android já configurado, execute `npm run android`. No macOS, use
-`npm run ios` para o simulador iOS.
+Abra o projeto no Expo Go pelo QR code exibido no terminal. Para uma conexão local, o celular e o computador devem estar na mesma rede.
 
-## Verificações
+Para abrir em um emulador Android:
 
 ```sh
-npm run typecheck
-npm run lint
-npm test
-npm run format:check
-npx expo install --check
+npm run android
 ```
 
-Use `npm run format` para formatar o código. `AGENTS.md` e `docs/` são excluídos
-da formatação para preservar as fontes de verdade.
+Para abrir no simulador iOS, no macOS:
 
-## Estrutura
+```sh
+npm run ios
+```
+
+Se alterações não aparecerem, reinicie o servidor com o cache limpo e recarregue o app:
+
+```sh
+npx expo start --clear
+```
+
+## Comandos de desenvolvimento
+
+| Comando                | Descrição                    |
+| ---------------------- | ---------------------------- |
+| `npm start`            | Inicia o servidor Expo       |
+| `npm run android`      | Abre o app no Android        |
+| `npm run ios`          | Abre o app no simulador iOS  |
+| `npm run typecheck`    | Verifica os tipos TypeScript |
+| `npm run lint`         | Verifica o código com ESLint |
+| `npm test`             | Executa os testes            |
+| `npm run format:check` | Verifica a formatação        |
+| `npm run format`       | Aplica a formatação          |
+
+Os testes cobrem cálculo de sequências, datas, persistência SQLite e interações das telas. Os testes de persistência usam o SQLite nativo do Node.js.
+
+## Organização do código
 
 ```text
-app/
-  _layout.tsx
-  index.tsx
-__tests__/
-  home.test.tsx
+app/                         Rotas e layout do aplicativo
 src/
-  database/
-  design-system/
-  features/
-  shared/
+  database/                  Conexão SQLite e migrações
+  design-system/             Tokens visuais e componentes compartilhados
+  features/habits/
+    components/              Home, calendário, formulários e modais
+    domain/                  Regras de conclusão e cálculo de métricas
+    hooks/                   Estado e coordenação das interações
+    repository/              Acesso aos hábitos e ao histórico
+  shared/date/               Operações com datas locais
+__tests__/                   Testes automatizados
 ```
 
-A Date Foundation fica em `src/shared/date`, o domínio e repository em
-`src/features/habits`, e a inicialização/migrations em `src/database`.
-A fundação visual está documentada em [src/design-system/README.md](src/design-system/README.md).
-Backend e autenticação não foram implementados.
-Os testes ficam fora de `app/` para não serem interpretados como rotas.
-
-O lockfile fixa a instalação. Os overrides de React DOM, Reanimated e Worklets
-alinham peers transitivos ao SDK 57; nenhuma funcionalidade web foi implementada. Os tipos globais de testes são declarados explicitamente para TypeScript 6.
-
-## Avisos de dependências
-
-A auditoria inicial reportou 15 alertas transitivos (11 moderados e 4 altos),
-envolvendo `node-forge`, `uuid`/`xcode` e `decode-uri-component`/`query-string`
-na cadeia do Expo e Expo Router. A correção sugerida por `npm audit fix --force`
-faz downgrade incompatível do SDK; não deve ser aplicada automaticamente.
-Há também avisos de depreciação em ferramentas e dependências transitivas.
-
-## Persistência (Milestone 3)
-
-`expo-sqlite ~57.0.3` foi instalado por `expo install`. O layout abre `habitual.db`
-no diretório persistente padrão do Expo, via `SQLiteProvider`, e executa
-`initializeDatabase` antes de renderizar a navegação. A Home acessa o repository por meio de useHabits, sem SQL nos componentes.
-
-As migrations são numeradas e usam `PRAGMA user_version`. Somente versões pendentes
-são aplicadas, em transação junto com o avanço da versão. Uma versão de banco mais
-nova que a aplicação é rejeitada. Nenhum dado é apagado durante inicialização.
-`PRAGMA foreign_keys = ON` é aplicado e verificado em cada conexão inicializada.
-
-O repository usa bindings para dados de entrada e aliases SQL para mapear os tipos.
-IDs são 128 bits aleatórios do SQLite (`lower(hex(randomblob(16)))`), protegidos
-por primary keys. Timestamps usam ISO 8601; `completion.date` permanece `LocalDate`.
-A conversão do timestamp de criação para dia local usa `toLocalDate` na Date Foundation.
-
-`update` e `toggleCompletion` lançam `Error('Habit not found.')` para um hábito ausente.
-Consultas retornam `null`/listas vazias; `delete` é idempotente. Nomes vazios e datas
-inválidas lançam `RangeError`. Nenhuma métrica é persistida.
-
-O contrato expõe Promises, mas as consultas usam a API síncrona do Expo. O toggle
-executa uma transação curta sem `await`, impedindo interleaving entre chamadas na
-mesma conexão. Falhas fazem rollback. Operações síncronas podem bloquear a thread
-JavaScript durante consultas; a medição/otimização de grandes volumes fica para o
-milestone de performance.
-
-Os testes usam SQLite real de `node:sqlite`, sem banco simulado e sem dependência
-adicional. Execute com o Node 24 LTS indicado acima. Para rodar apenas persistência:
-
-```sh
-npm test -- database.test.ts SQLiteHabitRepository.test.ts
-```
-
-A suíte cobre migration única, rollback, constraints, cascade, bindings, CRUD,
-ordenação, intervalos, validação de datas, toggles rápidos e reabertura de arquivo.
-O teste com SQLite do Node não substitui uma execução em dispositivo Expo.
-
-## Home (Milestones 6–9)
-
-A Home carrega hábitos em ordem de criação e o histórico completo de conclusões.
-As métricas são derivadas por calculateHabitMetrics; a janela visual usa
-getRecentDates(today, 6). Nenhum dado fictício é inserido no banco.
-
-O botão + e o CTA do estado vazio abrem o mesmo HabitFormSheet, feito com Modal,
-KeyboardAvoidingView e componentes existentes. O nome recebe trim e tem limite
-de 80 caracteres. Erros de criação ficam no formulário, sem perder o texto.
-
-Datas válidas usam atualização otimista. Gravações da mesma data são serializadas,
-preservando a intenção final de toques rápidos. Falhas restauram apenas a data
-afetada ao último estado confirmado, sem desfazer edições de outras datas.
-Datas anteriores à criação são editáveis. Haptics leves usam expo-haptics
-~57.0.3 somente ao concluir; falhas táteis não interrompem a persistência.
-
-Validação automatizada: suíte completa, typecheck, lint, formatter, compatibilidade
-Expo e exportação Android/iOS. Teclado, safe area, animação e haptics ainda precisam
-de revisão em dispositivo; o ambiente de implementação não tem emulador/ADB.
-
-A instalação de expo-haptics reportou 60 vulnerabilidades na árvore (10 moderadas
-e 50 altas) e bloqueio do postinstall de unrs-resolver pelo npm. Nenhuma versão
-existente do lockfile foi alterada. Não foi aplicado audit fix.
-
-## Details e gestão (Milestones 10–14)
-
-A rota /habit/[id] apresenta métricas derivadas e calendário mensal.
-HabitsProvider compartilha o mesmo estado e toggle otimista entre Home e Details.
-O calendário usa LocalDate e permite navegar por anos anteriores e até dezembro do ano atual.
-Somente dias futuros são indisponíveis; todos os outros permitem
-edição histórica com rollback. Operações de mês ficam na Date Foundation.
-
-Editar reutiliza HabitFormSheet e altera apenas o nome. Excluir exige confirmação
-com ação danger, aguarda toggles pendentes e remove apenas o hábito pelo repository;
-o cascade do SQLite remove as conclusões. Após excluir, o app retorna à Home.
-
-Nenhuma dependência nova foi adicionada em M10–M14. M15 e posteriores não foram
-implementados. Revisão visual e interação em dispositivo permanecem necessárias.
+As métricas são derivadas do histórico de conclusões. Cada conclusão usa uma data de calendário local no formato `YYYY-MM-DD`, e o banco impede registros duplicados para o mesmo hábito e dia.

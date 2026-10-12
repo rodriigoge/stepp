@@ -1,7 +1,7 @@
 # Technical Specification — Habit Tracker Mobile
 
 **Versão:** 0.1  
-**Status:** Draft técnico  
+**Documento:** Especificação técnica
 **Fonte funcional:** PRD v0.1  
 **Arquitetura:** Local-first  
 **Plataforma:** Mobile

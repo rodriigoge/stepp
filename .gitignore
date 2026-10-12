@@ -8,3 +8,23 @@ expo-env.d.ts
 .DS_Store
 /android/
 /ios/
+
+# Local configuration and credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.keystore
+*.jks
+*.p12
+*.mobileprovision
+
+# Local app data
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+*.sqlite3
