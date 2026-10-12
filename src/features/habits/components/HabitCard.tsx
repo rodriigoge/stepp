@@ -1,5 +1,6 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { colors } from '../../../design-system/tokens/colors';
+import { radius } from '../../../design-system/tokens/radius';
 import { spacing } from '../../../design-system/tokens/spacing';
 import { typography } from '../../../design-system/tokens/typography';
 import { useRecentActivity } from '../hooks/useRecentActivity';
@@ -49,7 +50,7 @@ export function HabitCard({
           <StreakIndicator value={metrics.currentStreak} recordId={recordId} />
         </Pressable>
       </Pressable>
-      <View style={styles.days}>
+      <ScrollView horizontal contentContainerStyle={styles.days}>
         {days.map(({ date, completed, disabled }) => (
           <DayStatus
             key={date}
@@ -61,7 +62,7 @@ export function HabitCard({
             onPress={onToggleDay ? () => onToggleDay(date) : undefined}
           />
         ))}
-      </View>
+      </ScrollView>
       {error && (
         <Text
           accessibilityRole="alert"
@@ -75,7 +76,13 @@ export function HabitCard({
   );
 }
 const styles = StyleSheet.create({
-  container: { paddingVertical: spacing.xl, gap: spacing.md },
+  container: {
+    backgroundColor: colors.habitCard,
+    borderRadius: radius.control,
+    paddingVertical: spacing.xl,
+    paddingHorizontal: spacing.md,
+    gap: spacing.md,
+  },
   heading: {
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -85,6 +92,6 @@ const styles = StyleSheet.create({
   description: { flexGrow: 1, flexShrink: 1, gap: spacing.sm },
   name: { ...typography.habitName, color: colors.textPrimary },
   total: { ...typography.body, color: colors.textSecondary },
-  days: { flexDirection: 'row' },
+  days: { flexDirection: 'row', flexGrow: 1 },
   error: { ...typography.caption, color: colors.danger },
 });

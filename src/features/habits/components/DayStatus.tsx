@@ -3,6 +3,7 @@ import {
   Pressable,
   StyleSheet,
   Text,
+  View,
   useAnimatedValue,
 } from 'react-native';
 import * as Haptics from 'expo-haptics';
@@ -86,7 +87,11 @@ export function DayStatus({
           completed && styles.completed,
           { transform: [{ scale }] },
         ]}
-      />
+      >
+        {isToday && !compact && (
+          <View pointerEvents="none" style={styles.todayRing} />
+        )}
+      </Animated.View>
     </Pressable>
   );
 }
@@ -113,5 +118,13 @@ const styles = StyleSheet.create({
   completed: {
     backgroundColor: colors.completed,
     borderColor: colors.completed,
+  },
+  todayRing: {
+    position: 'absolute',
+    inset: -spacing.xs,
+    borderRadius: radius.round,
+    borderWidth: 1,
+    borderStyle: 'dashed',
+    borderColor: colors.textSecondary,
   },
 });

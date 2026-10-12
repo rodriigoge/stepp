@@ -9,6 +9,7 @@ export type IconButtonProps = Pick<
   'onPress' | 'accessibilityHint' | 'testID'
 > & {
   disabled?: boolean;
+  variant?: 'default' | 'floating';
   accessibilityLabel: string;
   renderIcon: (props: { color: string; size: number }) => ReactNode;
 };
@@ -17,6 +18,7 @@ export function IconButton({
   renderIcon,
   accessibilityLabel,
   disabled = false,
+  variant = 'default',
   ...props
 }: IconButtonProps) {
   return (
@@ -28,7 +30,9 @@ export function IconButton({
       accessibilityState={{ disabled }}
       style={({ pressed }) => [
         styles.base,
+        variant === 'floating' && styles.floating,
         pressed && !disabled && styles.pressed,
+        pressed && !disabled && variant === 'floating' && styles.floating,
         disabled && styles.disabled,
       ]}
     >
@@ -38,7 +42,13 @@ export function IconButton({
         importantForAccessibility="no-hide-descendants"
         pointerEvents="none"
       >
-        {renderIcon({ color: colors.textPrimary, size: controls.iconSize })}
+        {renderIcon({
+          color: variant === 'floating' ? colors.onAction : colors.textPrimary,
+          size:
+            variant === 'floating'
+              ? controls.floatingIconSize
+              : controls.iconSize,
+        })}
       </View>
     </Pressable>
   );
@@ -55,5 +65,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.surface,
     opacity: controls.pressedOpacity,
   },
+  floating: { backgroundColor: colors.floatingAction },
   disabled: { opacity: controls.disabledOpacity },
 });

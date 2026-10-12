@@ -6,7 +6,8 @@ Importe cada componente e token pelo seu arquivo. Não há showcase/rota no apli
 ## Tokens
 
 - `colors`: background, surface, textPrimary, textSecondary, textMuted, border,
-  accent, completed, inactive, danger e onAction. Accent/completed usam o mesmo verde.
+  accent, completed, inactive, danger e onAction. Accent usa verde escuro;
+  completed usa verde pastel para os indicadores de conclusão.
 - `typography`: display 40, title 28, habitName 20, metric 36, body 16, label 13,
   caption 12. Títulos/números usam Georgia no iOS e serif no Android; o restante usa
   fonte padrão do sistema. Font scaling permanece habilitado e textos podem quebrar linha.
